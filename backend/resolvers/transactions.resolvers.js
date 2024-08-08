@@ -31,22 +31,21 @@ const transactionResolver = {
 					...input,
 					userId: context.getUser()._id,
 				});
-
 				await newTransaction.save();
 				return newTransaction;
 			} catch (err) {
-				console.log("Error creating transaction", err);
+				console.error("Error creating transaction:", err);
 				throw new Error("Error creating transaction");
 			}
 		},
 		updateTransaction: async (_, { input }) => {
 			try {
-				const updateTransaction = await Transaction.findByIdAndUpdate(
+				const updatedTransaction = await Transaction.findByIdAndUpdate(
 					input.transactionId,
 					input,
 					{ new: true }
 				);
-				return updateTransaction;
+				return updatedTransaction;
 			} catch (err) {
 				console.log("Error updating transaction", err);
 				throw new Error("Error updating transaction");
@@ -54,17 +53,17 @@ const transactionResolver = {
 		},
 		deleteTransaction: async (_, { transactionId }) => {
 			try {
-				const deleteTransaction = await Transaction.findByIdAndDelete(
+				const deletedTransaction = await Transaction.findByIdAndDelete(
 					transactionId
 				);
-				return deleteTransaction;
+				return deletedTransaction;
 			} catch (error) {
 				console.log("Error deleting transaction", err);
 				throw new Error("Error deleting transaction");
 			}
 		},
-    },
-    //
+	},
+	//
 };
 
 export default transactionResolver;

@@ -4,6 +4,7 @@ const transactionSchema = mongoose.Schema({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true,
+		ref:"User"
 	},
 	description: {
 		type: String,
@@ -11,7 +12,7 @@ const transactionSchema = mongoose.Schema({
 	},
 	paymentType: {
 		type: String,
-		enum: ["cash", "credit"],
+		enum: ["cash", "card"],
 		required: true,
 	},
 	category: {

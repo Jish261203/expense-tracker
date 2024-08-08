@@ -13,12 +13,7 @@ const TransactionPage = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log("formData", formData);
-		setFormData({description: "",
-		paymentType: "",
-		category: "",
-		amount: "",
-		location: "",
-		date: "",})
+
 	};
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;

@@ -12,7 +12,7 @@ export const configurePassport = async () => {
     });
 
     passport.deserializeUser(async (id, done) => {
-        console.log("Desrializing User");
+        console.log("Deserializing User");
         try {
             const user = await User.findById(id);
             done(null, user)
