@@ -1,4 +1,5 @@
 import Transaction from "../models/transaction.model.js";
+import User from "../models/user.model.js";
 const transactionResolver = {
 	Query: {
 		transactions: async (_, __, context) => {
@@ -30,14 +31,12 @@ const transactionResolver = {
 			const transactions = await Transaction.find({ userId });
 			const categoryMap = {};
 
-
 			transactions.forEach((transaction) => {
 				if (!categoryMap[transaction.category]) {
 					categoryMap[transaction.category] = 0;
 				}
 				categoryMap[transaction.category] += transaction.amount;
 			});
-
 
 			return Object.entries(categoryMap).map(([category, totalAmount]) => ({
 				category,
@@ -84,7 +83,18 @@ const transactionResolver = {
 			}
 		},
 	},
-	//
+	Transaction: {
+		user: async (parent) => {
+			const userId = parent.userId;
+			try {
+				const user = await User.findById(userId);
+				return user;
+			} catch (err) {
+				console.error("Error getting user:", err);
+				throw new Error("Error getting user");
+			}
+		},
+	},
 };
 
 export default transactionResolver;

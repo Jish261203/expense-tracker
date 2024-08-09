@@ -14,6 +14,7 @@ export const GET_TRANSACTIONS = gql`
 	}
 `;
 
+
 export const GET_TRANSACTION = gql`
 	query GetTransaction($id: ID!) {
 		transaction(transactionId: $id) {
@@ -24,6 +25,11 @@ export const GET_TRANSACTION = gql`
 			amount
 			location
 			date
+			user {
+				name
+				username
+				profilePicture
+			}
 		}
 	}
 `;
