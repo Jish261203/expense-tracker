@@ -1,48 +1,42 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import SignUpPage from "./pages/SignUpPage";
-import NotFound from "./pages/NotFound";
 import HomePage from "./pages/HomePage";
-import TransactionPage from "./pages/TransactionPage";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import TransactionPage from "./pages/TransactionPage";
+import NotFoundPage from "./pages/NotFound";
 import Header from "./components/ui/Header";
 import { useQuery } from "@apollo/client";
 import { GET_AUTHENTICATED_USER } from "./graphql/queries/user.query";
 import { Toaster } from "react-hot-toast";
-import { useEffect, useState } from "react";
 
 function App() {
-	const { loading, data  } = useQuery(GET_AUTHENTICATED_USER);
-	const [authUser, setAuthUser] = useState(null);
+	const { loading, data } = useQuery(GET_AUTHENTICATED_USER);
 
-	useEffect(() => {
-		if (!loading) {
-			setAuthUser(data?.authUser);
-		}
-	}, [loading, data]);
-
-	if (loading) return null; // Or a loading spinner component
+	if (loading) return null;
 
 	return (
 		<>
-			{authUser && <Header />}
+			{data?.authUser && <Header />}
 			<Routes>
 				<Route
 					path="/"
-					element={authUser ? <HomePage /> : <Navigate to="/login" />}
+					element={data.authUser ? <HomePage /> : <Navigate to="/login" />}
 				/>
 				<Route
 					path="/login"
-					element={authUser ? <Navigate to="/" /> : <LoginPage />}
+					element={!data.authUser ? <LoginPage /> : <Navigate to="/" />}
 				/>
 				<Route
 					path="/signup"
-					element={authUser ? <Navigate to="/" /> : <SignUpPage />}
+					element={!data.authUser ? <SignUpPage /> : <Navigate to="/" />}
 				/>
 				<Route
 					path="/transaction/:id"
-					element={authUser ? <TransactionPage /> : <Navigate to="/login" />}
+					element={
+						data.authUser ? <TransactionPage /> : <Navigate to="/login" />
+					}
 				/>
-				<Route path="*" element={<NotFound />} />
+				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<Toaster />
 		</>
