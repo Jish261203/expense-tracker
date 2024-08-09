@@ -20,7 +20,7 @@ const Card = ({ transaction }) => {
 		transaction;
 	const cardClass = categoryColorMap[category];
 	const [deleteTransaction, { loading }] = useMutation(DELETE_TRANSACTION, {
-		refetchQueries: ["GetTransactions"],
+		refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
 	});
 	description = description[0]?.toUpperCase() + description.slice(1);
 	category = category[0]?.toUpperCase() + category.slice(1);
@@ -29,7 +29,9 @@ const Card = ({ transaction }) => {
 	const formatedDate = formatDate(date);
 	const handleDelete = async () => {
 		try {
-			await deleteTransaction({ variables: { transactionId: transaction._id } });
+			await deleteTransaction({
+				variables: { transactionId: transaction._id },
+			});
 			toast.success("Transaction deleted successfully");
 		} catch (error) {
 			console.error("Error deleting transaction:", error);
@@ -43,10 +45,14 @@ const Card = ({ transaction }) => {
 				<div className="flex flex-row items-center justify-between">
 					<h2 className="text-lg font-bold text-white">{category}</h2>
 					<div className="flex items-center gap-2">
-						{!loading && <FaTrash className={"cursor-pointer"} onClick={handleDelete} />}
-						{loading && <div className='w-6 h-6 border-t-2 border-b-2  rounded-full animate-spin'></div>}
+						{!loading && (
+							<FaTrash className={"cursor-pointer"} onClick={handleDelete} />
+						)}
+						{loading && (
+							<div className="w-6 h-6 border-t-2 border-b-2  rounded-full animate-spin"></div>
+						)}
 						<Link to={`/transaction/${transaction._id}`}>
-							<HiPencilAlt className='cursor-pointer' size={20} />
+							<HiPencilAlt className="cursor-pointer" size={20} />
 						</Link>
 					</div>
 				</div>
