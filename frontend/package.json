@@ -12,17 +12,21 @@
   "dependencies": {
     "@apollo/client": "^3.11.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "build": "^0.1.4",
     "chart.js": "^4.4.3",
     "clsx": "^2.1.1",
+    "expense-tracker": "file:..",
     "framer-motion": "^11.3.21",
     "graphql": "^16.9.0",
     "mini-svg-data-uri": "^1.4.4",
+    "npm": "^10.8.2",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.26.0",
+    "run": "^1.5.0",
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
